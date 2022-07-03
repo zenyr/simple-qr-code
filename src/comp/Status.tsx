@@ -5,7 +5,7 @@ export const Status = () => {
   const lastT = useStore((s) => s.lastT);
   return (
     <>
-      <Divider />
+      <Divider style={{ marginBottom: 10 }} />
       <Group>
         <InputWrapper
           label="Last QR content change"

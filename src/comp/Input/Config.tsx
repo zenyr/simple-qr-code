@@ -23,7 +23,8 @@ export const InputConfig = () => {
         description="Decides final image's width (px)"
         value={String(size)}
         onChange={handleSizeChange}
-        required>
+        required
+      >
         <Radio value="128" label="128" />
         <Radio value="256" label="256" />
         <Radio value="512" label="512" />
@@ -34,7 +35,8 @@ export const InputConfig = () => {
         description="Increases density"
         value={level}
         onChange={handleLevelChange}
-        required>
+        required
+      >
         <Radio value="L" label="L (7%)" />
         <Radio value="M" label="M (15%)" />
         <Radio value="Q" label="Q (20%)" />

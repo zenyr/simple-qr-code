@@ -1,9 +1,9 @@
-import { Button, Group, InputWrapper, LoadingOverlay } from '@mantine/core';
+import { Button, Group, InputWrapper } from '@mantine/core';
 import download from 'js-file-download';
 import { QRCodeCanvas } from 'qrcode.react';
 import { MouseEvent, useCallback, useState } from 'react';
 import Measure from 'react-measure';
-import { Download } from 'tabler-icons-react';
+import { Download, ZoomInArea } from 'tabler-icons-react';
 import { useStore } from '../store';
 export const Output = () => {
   const store = useStore();
@@ -32,7 +32,7 @@ export const Output = () => {
         `<img src="${dataUrl}" style="max-width: 100%;height:auto;" width="${width}" /><br/><span style="font: 10pt monospace">${sizeTxt}</span>`
       );
     },
-    [getCanvas]
+    [getCanvas, store.size]
   );
 
   const handleDownload = useCallback(
@@ -59,16 +59,18 @@ export const Output = () => {
         bounds
         onResize={(contentRect) =>
           setMw(~~(contentRect.bounds?.width || store.size))
-        }>
+        }
+      >
         {({ measureRef }) => (
           <InputWrapper
             ref={measureRef}
             label="QR Result"
             description={
               mw < store.size
-                ? `Seems ${mw}px but image is still ${store.size}px`
+                ? `Seems ${mw}px but the image is still ${store.size}px`
                 : void 0
-            }>
+            }
+          >
             <QRCodeCanvas
               className="result"
               value={store.input}
@@ -86,23 +88,21 @@ export const Output = () => {
         )}
       </Measure>
       <Group style={{ position: 'relative' }}>
-        <LoadingOverlay visible={busy} loaderProps={{ size: 'sm' }} />
         <Button
-          component="a"
           compact
           variant="subtle"
-          href="#"
-          onClick={handlePopup}>
+          onClick={handlePopup}
+          leftIcon={<ZoomInArea size={16} />}
+        >
           Popup
         </Button>
         <Button
-          component="a"
           compact
           variant="subtle"
-          href="#"
           onClick={handleDownload}
-          disabled={busy}>
-          <Download />
+          disabled={busy}
+          leftIcon={<Download size={16} />}
+        >
           Download
         </Button>
       </Group>
