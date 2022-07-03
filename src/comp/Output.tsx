@@ -3,8 +3,8 @@ import download from 'js-file-download';
 import { QRCodeCanvas } from 'qrcode.react';
 import { MouseEvent, useCallback, useState } from 'react';
 import Measure from 'react-measure';
+import { Download } from 'tabler-icons-react';
 import { useStore } from '../store';
-
 export const Output = () => {
   const store = useStore();
   const [mw, setMw] = useState(store.size);
@@ -21,7 +21,16 @@ export const Output = () => {
       if (!canvas) return;
       const pop = window.open();
       const dataUrl = canvas.toDataURL();
-      pop?.document.write(`<img src="${dataUrl}" style="max-width: 100%;" />`);
+      const dpr = window.devicePixelRatio || 1;
+      const width = store.size / dpr;
+      const sizeTxt = `Image size: ${store.size}px${
+        dpr !== 1
+          ? ` / Current size: ${width}px (with devicePixelRatio: ${dpr})`
+          : ''
+      }`;
+      pop?.document.write(
+        `<img src="${dataUrl}" style="max-width: 100%;height:auto;" width="${width}" /><br/><span style="font: 10pt monospace">${sizeTxt}</span>`
+      );
     },
     [getCanvas]
   );
@@ -65,6 +74,12 @@ export const Output = () => {
               value={store.input}
               size={store.size}
               level={store.level}
+              imageSettings={{
+                src: store.overlaySrc,
+                excavate: true,
+                width: store.overlaySize[0] || 0,
+                height: store.overlaySize[1] || 0,
+              }}
               includeMargin
             />
           </InputWrapper>
@@ -87,6 +102,7 @@ export const Output = () => {
           href="#"
           onClick={handleDownload}
           disabled={busy}>
+          <Download />
           Download
         </Button>
       </Group>

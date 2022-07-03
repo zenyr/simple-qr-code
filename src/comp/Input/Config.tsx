@@ -1,37 +1,27 @@
-import { Radio, RadioGroup, Textarea } from '@mantine/core';
-import { ChangeEvent, useCallback } from 'react';
-import { Store, useStore } from '../store';
+import { Radio, RadioGroup } from '@mantine/core';
+import { useCallback } from 'react';
+import { Store, useStore } from '../../store';
 
-export const Input = () => {
-  const store = useStore();
-  const handleInputChange = useCallback(
-    (e: ChangeEvent<HTMLTextAreaElement>) =>
-      store.setInput(e.currentTarget.value),
-    [store]
-  );
+export const InputConfig = () => {
+  const size = useStore((s) => s.size);
+  const level = useStore((s) => s.level);
+  const setSize = useStore((s) => s.setSize);
+  const setLevel = useStore((s) => s.setLevel);
+
   const handleSizeChange = useCallback(
-    (size: string) => store.setSize(parseInt(size, 10) as Store['size']),
-    [store]
+    (size: string) => setSize(parseInt(size, 10) as Store['size']),
+    [setSize]
   );
   const handleLevelChange = useCallback(
-    (level: string) => store.setLevel(level as Store['level']),
-    [store]
+    (level: string) => setLevel(level as Store['level']),
+    [setLevel]
   );
   return (
     <>
-      <Textarea
-        label="QR Content"
-        placeholder="URL/string etc."
-        value={store.input}
-        onChange={handleInputChange}
-        autosize
-        maxRows={8}
-        required
-      />
       <RadioGroup
         label="Image size"
         description="Decides final image's width (px)"
-        value={String(store.size)}
+        value={String(size)}
         onChange={handleSizeChange}
         required>
         <Radio value="128" label="128" />
@@ -42,7 +32,7 @@ export const Input = () => {
       <RadioGroup
         label="Error correction level"
         description="Increases density"
-        value={store.level}
+        value={level}
         onChange={handleLevelChange}
         required>
         <Radio value="L" label="L (7%)" />
