@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+}
+html,
+body,
+#root,
+#root > div {
+  height: 100%;
+}
+canvas.result {
+  display: block;
+  max-width: 100%;
+  height: auto !important;
+  margin-bottom: 10px;
+}
