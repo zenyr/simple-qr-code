@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export interface Store {
@@ -12,7 +12,7 @@ export interface Store {
   setInput: (input: string) => void;
   setOverlay: (input: string) => void;
   setOverlaySrc: (input: string) => void;
-  setOverlaySize: (input: [number,number]) => void;
+  setOverlaySize: (input: [number, number]) => void;
   setLevel: (input: Store['level']) => void;
   setSize: (input: number) => void;
 }

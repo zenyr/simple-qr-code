@@ -1,8 +1,8 @@
 import { ActionIcon, Textarea } from '@mantine/core';
 import { ChangeEvent, useCallback, useEffect } from 'react';
 import { X } from 'tabler-icons-react';
-import { useStore } from '../../../store';
-import { InputOverlaySrcRenderer } from './OveraySrcRenderer';
+import { useStore } from '../../../store/index.js';
+import { InputOverlaySrcRenderer } from './OveraySrcRenderer.js';
 
 const REG_URL = /^https?:/;
 

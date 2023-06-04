@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useStore } from '../../../store';
+import { useStore } from '../../../store/index.js';
 
 export const InputOverlaySrcRenderer = () => {
   const ref = useRef<HTMLCanvasElement>(null);

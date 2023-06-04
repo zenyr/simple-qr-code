@@ -1,13 +1,16 @@
-import { Button, Group, InputWrapper } from '@mantine/core';
+import { Button, Group, Input, Stack } from '@mantine/core';
+import { useElementSize } from '@mantine/hooks';
+import { ClassNames } from '@emotion/react';
 import download from 'js-file-download';
 import { QRCodeCanvas } from 'qrcode.react';
 import { MouseEvent, useCallback, useState } from 'react';
-import Measure from 'react-measure';
 import { Download, ZoomInArea } from 'tabler-icons-react';
-import { useStore } from '../store';
+import { useStore } from '../store/index.js';
+
 export const Output = () => {
   const store = useStore();
-  const [mw, setMw] = useState(store.size);
+  const { ref, width } = useElementSize();
+
   const [busy, setBusy] = useState(false);
 
   const getCanvas = useCallback(
@@ -54,25 +57,29 @@ export const Output = () => {
   );
 
   return (
-    <>
-      <Measure
-        bounds
-        onResize={(contentRect) =>
-          setMw(~~(contentRect.bounds?.width || store.size))
+    <Stack spacing="xs">
+      <Input.Wrapper
+        ref={ref}
+        label="QR Result"
+        description={
+          width < store.size
+            ? `Seems ${width}px but the image is still ${store.size}px`
+            : void 0
         }
+        style={{ position: 'relative' }}
       >
-        {({ measureRef }) => (
-          <InputWrapper
-            ref={measureRef}
-            label="QR Result"
-            description={
-              mw < store.size
-                ? `Seems ${mw}px but the image is still ${store.size}px`
-                : void 0
-            }
-          >
+        <ClassNames>
+          {({ css, cx }) => (
             <QRCodeCanvas
-              className="result"
+              className={cx(
+                'result',
+                css`
+                  display: block;
+                  margin-top: 5px;
+                  max-width: 100%;
+                  height: auto !important;
+                `
+              )}
               value={store.input}
               size={store.size}
               level={store.level}
@@ -84,10 +91,10 @@ export const Output = () => {
               }}
               includeMargin
             />
-          </InputWrapper>
-        )}
-      </Measure>
-      <Group style={{ position: 'relative' }}>
+          )}
+        </ClassNames>
+      </Input.Wrapper>
+      <Group spacing="xs">
         <Button
           compact
           variant="subtle"
@@ -106,6 +113,6 @@ export const Output = () => {
           Download
         </Button>
       </Group>
-    </>
+    </Stack>
   );
 };

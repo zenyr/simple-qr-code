@@ -10,7 +10,7 @@
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react-jsx",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,

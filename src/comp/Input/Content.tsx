@@ -1,7 +1,7 @@
 import { ActionIcon, Textarea } from '@mantine/core';
 import { ChangeEvent, useCallback } from 'react';
 import { X } from 'tabler-icons-react';
-import { useStore } from '../../store';
+import { useStore } from '../../store/index.js';
 
 export const InputContent = () => {
   const input = useStore((s) => s.input);

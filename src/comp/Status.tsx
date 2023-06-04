@@ -1,26 +1,31 @@
-import { Divider, Group, InputWrapper } from '@mantine/core';
-import { useStore } from '../store';
+import { Divider, Group, Input, Stack } from '@mantine/core';
+import { useStore } from '../store/index.js';
 
 export const Status = () => {
   const lastT = useStore((s) => s.lastT);
   return (
-    <>
-      <Divider style={{ marginBottom: 10 }} />
-      <Group>
-        <InputWrapper
+    <Stack>
+      <Divider/>
+      <Group spacing="xs">
+        <Input.Wrapper
           label="Last QR content change"
           description={
             !lastT ? 'Never' : `${~~((Date.now() - lastT) / 1000)}s ago`
           }
           children={null}
         />
-        <InputWrapper
+        <Input.Wrapper
           label="Powered by"
-          description="react, mantine, qrcode.react, react-measure, zustand"
+          description="react, mantine, qrcode.react, zustand, vite"
           children={null}
         />
-        <InputWrapper label="Created by" description="@zenyr" children={null} />
+        <Input.Wrapper
+          label="Created by"
+          description="@zenyr"
+          children={null}
+        />
+        <Input.Wrapper label="version" description="2.0.0" children={null} />
       </Group>
-    </>
+    </Stack>
   );
 };
