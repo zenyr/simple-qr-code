@@ -24,7 +24,7 @@ export const Status = () => {
           description="@zenyr"
           children={null}
         />
-        <Input.Wrapper label="version" description="2.0.0" children={null} />
+        <Input.Wrapper label="version" description="2.0.1" children={null} />
       </Group>
     </Stack>
   );
